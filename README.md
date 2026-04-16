@@ -196,7 +196,6 @@ Se intentó mantener el proyecto ordenado y fácil de entender, para que cada pa
 Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y fácil de mantener a medida que se iban agregando mejoras y ajustes.
 
 ## 📎 Entregables
-- **Repositorio público**: agregar URL del repositorio aquí
 - **Proyecto desplegado**: https://ionic-todo-app.netlify.app/
 - **APK generado**: `platforms/android/app/build/outputs/apk/debug/app-debug.apk`
 - **Enlace de descarga del APK**: https://drive.google.com/file/d/1UPkeegrw2C7u9J0BUzxRvRtw2UzFRbzS/view?usp=sharing
@@ -221,7 +220,19 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
   ![QR iOS](./assets/images/qr-ios.png)
 - **README completo**: incluido en este archivo
 
-## 💻 Comandos útiles
+## � Mejoras futuras
+Con más tiempo se podrían agregar:
+
+- **Sincronización en la nube**: integrar Firebase Firestore para guardar tareas y categorías en la nube y poder acceder desde múltiples dispositivos.
+- **Autenticación de usuarios**: permitir login con email/password o proveedores sociales para que cada usuario tenga sus propias tareas.
+- **Notificaciones push**: recordar tareas pendientes o fechas límite usando notificaciones locales o push.
+- **Fechas de vencimiento**: agregar fecha límite a las tareas y ordenarlas por prioridad.
+- **Etiquetas o tags**: permitir agregar etiquetas a las tareas para organizarlas mejor.
+- **Búsqueda y filtros avanzados**: buscar tareas por texto, fecha, estado o categoría.
+- **Internacionalización (i18n)**: soportar múltiples idiomas.
+- **Temas personalizados**: permitir que los usuarios creen sus propios temas.
+
+## �💻 Comandos útiles
 ### Instalar dependencias
 ```bash
 npm install
