@@ -31,8 +31,7 @@ import {
   checkmarkDoneOutline, 
   createOutline, 
   folderOpenOutline, 
-  trashOutline,
-  refreshOutline
+  trashOutline
 } from 'ionicons/icons';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
@@ -150,7 +149,6 @@ export class HomePage {
   selectedFilterCategoryId = '';
   themeMode: ThemeMode = 'system';
   isTaskComposerOpen = false;
-  isRefreshingConfig = false;
 
   constructor(
     private readonly taskService: TaskService,
@@ -158,18 +156,8 @@ export class HomePage {
     private readonly themeService: ThemeService,
     private readonly firebaseService: FirebaseService,
   ) {
-    addIcons({ addOutline, checkmarkDoneOutline, createOutline, folderOpenOutline, trashOutline, refreshOutline });
+    addIcons({ addOutline, checkmarkDoneOutline, createOutline, folderOpenOutline, trashOutline });
     this.themeMode = this.themeService.getCurrentThemeMode();
-  }
-
-  async refreshFirebaseConfig(): Promise<void> {
-    this.isRefreshingConfig = true;
-
-    try {
-      await this.firebaseService.refreshRemoteConfig();
-    } finally {
-      this.isRefreshingConfig = false;
-    }
   }
 
   async addTask(modal?: IonModal): Promise<void> {

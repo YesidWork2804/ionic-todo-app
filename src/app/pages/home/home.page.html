@@ -60,13 +60,6 @@
           </ion-select>
         </ion-item>
       </div>
-
-      <div class="hero-actions">
-        <ion-button size="small" fill="clear" color="medium" (click)="refreshFirebaseConfig()" [disabled]="isRefreshingConfig">
-          <ion-icon slot="start" name="refresh-outline"></ion-icon>
-          {{ isRefreshingConfig ? 'Sincronizando...' : 'Sincronizar' }}
-        </ion-button>
-      </div>
     </section>
 
     @if (showStatistics$ | async; as showStatistics) {
