@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonBadge,
   IonButton,
   IonCheckbox,
   IonContent,
+  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
@@ -18,6 +20,8 @@ import {
   IonSelect,
   IonSelectOption,
   IonText,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline, checkmarkDoneOutline, trashOutline } from 'ionicons/icons';
@@ -37,10 +41,12 @@ import { TaskService } from '../../services/task.service';
     DatePipe,
     FormsModule,
     NgClass,
+    RouterLink,
     IonBadge,
     IonButton,
     IonCheckbox,
     IonContent,
+    IonHeader,
     IonIcon,
     IonInput,
     IonItem,
@@ -53,6 +59,8 @@ import { TaskService } from '../../services/task.service';
     IonSelect,
     IonSelectOption,
     IonText,
+    IonTitle,
+    IonToolbar,
   ],
 })
 export class HomePage {

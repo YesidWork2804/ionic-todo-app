@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { AsyncPipe, DatePipe, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonBadge,
   IonButton,
   IonContent,
+  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
@@ -15,6 +17,8 @@ import {
   IonList,
   IonNote,
   IonText,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline, createOutline, folderOpenOutline, saveOutline, trashOutline } from 'ionicons/icons';
@@ -32,9 +36,11 @@ import { CategoryService } from '../../services/category.service';
     DatePipe,
     FormsModule,
     NgStyle,
+    RouterLink,
     IonBadge,
     IonButton,
     IonContent,
+    IonHeader,
     IonIcon,
     IonInput,
     IonItem,
@@ -45,6 +51,8 @@ import { CategoryService } from '../../services/category.service';
     IonList,
     IonNote,
     IonText,
+    IonTitle,
+    IonToolbar,
   ],
 })
 export class CategoriesPage {

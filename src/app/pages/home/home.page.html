@@ -1,5 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My Tasks</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true" class="home-content">
   <div class="page-shell">
+    <nav class="page-nav">
+      <a routerLink="/home" class="page-nav__link page-nav__link--active">Tareas</a>
+      <a routerLink="/categories" class="page-nav__link">Categorías</a>
+    </nav>
+
     <section class="hero-card">
       <div>
         <ion-text color="medium">Organiza tu día</ion-text>

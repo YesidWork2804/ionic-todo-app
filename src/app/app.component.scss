@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--ion-color-medium) 14%, transparent);
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--ion-color-step-50) 90%, transparent);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(16px);
+}
+
+.bottom-nav__item {
+  min-height: 58px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--ion-color-medium);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.bottom-nav__item ion-icon {
+  font-size: 1.2rem;
+}
+
+.bottom-nav__item ion-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.bottom-nav__item--active {
+  background: color-mix(in srgb, var(--ion-color-primary) 14%, transparent);
+  color: var(--ion-color-primary);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 576px) {
+  .bottom-nav {
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+}

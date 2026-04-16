@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon } from '@ionic/angular/standalone';
+import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { listOutline, folderOpenOutline } from 'ionicons/icons';
+import { folderOpenOutline, homeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
-  imports: [IonTabs, IonTabBar, IonTabButton, IonLabel, IonIcon],
+  imports: [IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs],
 })
 export class TabsPage {
   constructor() {
-    addIcons({ listOutline, folderOpenOutline });
+    addIcons({ folderOpenOutline, homeOutline });
   }
 }
