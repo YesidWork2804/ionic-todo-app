@@ -56,7 +56,8 @@ ion-toolbar {
 .hero-card,
 .composer-card,
 .task-list,
-.empty-state {
+.empty-state,
+.statistics-card {
   background: var(--card-background);
   border: 1px solid var(--card-border);
   border-radius: 24px;
@@ -443,6 +444,22 @@ ion-item-option {
 }
 
 .empty-state p {
+  margin: 0;
+  color: var(--ion-color-medium);
+}
+
+.statistics-card {
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.statistics-card h2 {
+  margin: 0 0 6px;
+  color: var(--ion-text-color);
+}
+
+.statistics-card p {
   margin: 0;
   color: var(--ion-color-medium);
 }

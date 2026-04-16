@@ -60,7 +60,40 @@
           </ion-select>
         </ion-item>
       </div>
+
+      <ion-button size="small" fill="outline" (click)="refreshFirebaseConfig()">
+        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+        Actualizar config
+      </ion-button>
     </section>
+
+    @if (showStatistics$ | async; as showStatistics) {
+      @if (showStatistics) {
+        <section class="statistics-card">
+          <div>
+            <h2>Estadísticas</h2>
+            <p>Resumen de tu progreso en tareas.</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Total</span>
+              <ion-badge color="primary">{{ totalCount$ | async }}</ion-badge>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Completadas</span>
+              <ion-badge color="success">{{ completedCount$ | async }}</ion-badge>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Progreso</span>
+              <ion-badge [color]="(progressPercentage$ | async) === 100 ? 'success' : 'primary'">{{ progressPercentage$ | async }}%</ion-badge>
+            </div>
+          </div>
+        </section>
+      }
+    }
 
     <section class="composer-card composer-card--trigger">
       <div>
