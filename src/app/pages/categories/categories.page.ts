@@ -15,6 +15,7 @@ import {
   IonItemSliding,
   IonLabel,
   IonList,
+  IonModal,
   IonNote,
   IonSelect,
   IonSelectOption,
@@ -52,6 +53,7 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
     IonItemSliding,
     IonLabel,
     IonList,
+    IonModal,
     IonNote,
     IonSelect,
     IonSelectOption,
@@ -64,6 +66,7 @@ export class CategoriesPage {
   readonly categories$: Observable<Category[]> = this.categoryService.getCategories();
   readonly totalCategories$: Observable<number> = this.categories$.pipe(map((categories) => categories.length));
   themeMode: ThemeMode = 'system';
+  isCategoryComposerOpen = false;
 
   form = {
     id: '',
@@ -96,6 +99,7 @@ export class CategoriesPage {
     }
 
     this.resetForm();
+    this.isCategoryComposerOpen = false;
   }
 
   startEdit(category: Category, slidingItem?: IonItemSliding): void {
@@ -104,6 +108,7 @@ export class CategoriesPage {
       name: category.name,
       color: category.color,
     };
+    this.isCategoryComposerOpen = true;
 
     if (slidingItem) {
       void slidingItem.close();
@@ -135,6 +140,15 @@ export class CategoriesPage {
       name: '',
       color: '#4f46e5',
     };
+  }
+
+  openCategoryComposer(): void {
+    this.isCategoryComposerOpen = true;
+  }
+
+  closeCategoryComposer(): void {
+    this.isCategoryComposerOpen = false;
+    this.resetForm();
   }
 
   onThemeModeChange(themeMode: ThemeMode): void {

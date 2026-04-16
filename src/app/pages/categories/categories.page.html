@@ -42,51 +42,98 @@
       </div>
     </section>
 
-    <section class="composer-card">
-      <div class="form-header">
-        <div>
-          <h2>{{ isEditing ? 'Editar categoría' : 'Nueva categoría' }}</h2>
-          <p>{{ isEditing ? 'Actualiza el nombre o el color.' : 'Crea una categoría con nombre y color.' }}</p>
-        </div>
-
-        @if (isEditing) {
-          <ion-button fill="clear" color="medium" (click)="resetForm()">Cancelar</ion-button>
-        }
+    <section class="composer-card composer-card--trigger">
+      <div>
+        <h2>Nueva categoría</h2>
+        <p>Abre un formulario para crear o editar categorías sin recargar la vista principal.</p>
       </div>
 
-      <ion-item lines="none" class="composer-input">
-        <ion-input
-          [(ngModel)]="form.name"
-          placeholder="Nombre de la categoría"
-          clearInput="true"
-          inputmode="text"
-          (keyup.enter)="submit()"
-        ></ion-input>
-
-        <ion-button
-          slot="end"
-          shape="round"
-          fill="solid"
-          [disabled]="!form.name.trim()"
-          (click)="submit()"
-        >
-          <ion-icon slot="icon-only" [name]="isEditing ? 'save-outline' : 'add-outline'"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <div class="color-picker">
-        @for (color of presetColors; track color) {
-          <button
-            type="button"
-            class="color-chip"
-            [class.color-chip--active]="form.color === color"
-            [style.background]="color"
-            (click)="selectColor(color)"
-            [attr.aria-label]="'Seleccionar color ' + color"
-          ></button>
-        }
-      </div>
+      <ion-button shape="round" (click)="openCategoryComposer()">
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+        Crear categoría
+      </ion-button>
     </section>
+
+    <ion-modal [isOpen]="isCategoryComposerOpen" (didDismiss)="closeCategoryComposer()" class="app-sheet-modal">
+      <ng-template>
+        <ion-content class="sheet-content">
+          <section class="composer-card composer-card--sheet app-sheet-card">
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+              <div>
+                <ion-text color="medium">{{ isEditing ? 'Modo edición' : 'Nueva categoría' }}</ion-text>
+                <h2>{{ isEditing ? 'Editar categoría' : 'Crear categoría' }}</h2>
+                <p>{{ isEditing ? 'Actualiza el nombre o el color de la categoría.' : 'Crea una categoría con nombre y color.' }}</p>
+              </div>
+
+              <ion-button fill="clear" color="medium" (click)="closeCategoryComposer()">Cerrar</ion-button>
+            </div>
+
+            <div class="form-header">
+              @if (isEditing) {
+                <ion-button fill="clear" color="medium" (click)="resetForm()">Limpiar</ion-button>
+              }
+            </div>
+
+            <ion-item lines="none" class="composer-input">
+              <ion-input
+                [(ngModel)]="form.name"
+                placeholder="Nombre de la categoría"
+                clearInput="true"
+                inputmode="text"
+                (keyup.enter)="submit()"
+              ></ion-input>
+
+              <ion-button
+                slot="end"
+                shape="round"
+                fill="solid"
+                [disabled]="!form.name.trim()"
+                (click)="submit()"
+              >
+                <ion-icon slot="icon-only" [name]="isEditing ? 'save-outline' : 'add-outline'"></ion-icon>
+              </ion-button>
+            </ion-item>
+
+            <div class="field-group field-group--colors">
+              <div class="field-copy">
+                <label class="field-label">Color de la categoría</label>
+                <p>Este color se mostrará en las tareas asignadas.</p>
+              </div>
+
+              <div class="selected-color-preview">
+                <span class="selected-color-preview__swatch" [style.background]="form.color"></span>
+                <div>
+                  <strong>Color seleccionado</strong>
+                  <span>{{ form.color }}</span>
+                </div>
+              </div>
+
+              <div class="color-picker">
+                @for (color of presetColors; track color) {
+                  <button
+                    type="button"
+                    class="color-chip"
+                    [class.color-chip--active]="form.color === color"
+                    [style.background]="color"
+                    (click)="selectColor(color)"
+                    [attr.aria-label]="'Seleccionar color ' + color"
+                  ></button>
+                }
+              </div>
+            </div>
+
+            <div class="sheet-actions">
+              <ion-button fill="clear" color="medium" (click)="closeCategoryComposer()">Cancelar</ion-button>
+              <ion-button [disabled]="!form.name.trim()" (click)="submit()">
+                {{ isEditing ? 'Guardar cambios' : 'Guardar categoría' }}
+              </ion-button>
+            </div>
+          </section>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 
     @if (categories$ | async; as categories) {
       @if (categories.length > 0) {

@@ -16,6 +16,7 @@ import {
   IonItemSliding,
   IonLabel,
   IonList,
+  IonModal,
   IonNote,
   IonSelect,
   IonSelectOption,
@@ -56,6 +57,7 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
     IonItemSliding,
     IonLabel,
     IonList,
+    IonModal,
     IonNote,
     IonSelect,
     IonSelectOption,
@@ -99,6 +101,7 @@ export class HomePage {
   selectedCategoryId: string | null = null;
   selectedFilterCategoryId = '';
   themeMode: ThemeMode = 'system';
+  isTaskComposerOpen = false;
 
   constructor(
     private readonly taskService: TaskService,
@@ -111,6 +114,17 @@ export class HomePage {
 
   async addTask(): Promise<void> {
     await this.taskService.addTask(this.newTaskTitle, this.selectedCategoryId);
+    this.newTaskTitle = '';
+    this.selectedCategoryId = null;
+    this.isTaskComposerOpen = false;
+  }
+
+  openTaskComposer(): void {
+    this.isTaskComposerOpen = true;
+  }
+
+  closeTaskComposer(): void {
+    this.isTaskComposerOpen = false;
     this.newTaskTitle = '';
     this.selectedCategoryId = null;
   }

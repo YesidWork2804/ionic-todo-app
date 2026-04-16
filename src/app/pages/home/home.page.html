@@ -62,39 +62,73 @@
       </div>
     </section>
 
-    <section class="composer-card">
-      <ion-item lines="none" class="composer-input">
-        <ion-input
-          [(ngModel)]="newTaskTitle"
-          placeholder="Escribe una nueva tarea"
-          clearInput="true"
-          inputmode="text"
-          (keyup.enter)="addTask()"
-        ></ion-input>
+    <section class="composer-card composer-card--trigger">
+      <div>
+        <h2>Nueva tarea</h2>
+        <p>Abre un formulario rápido para crear una tarea y asignarle categoría.</p>
+      </div>
 
-        <ion-button
-          slot="end"
-          shape="round"
-          fill="solid"
-          [disabled]="!newTaskTitle.trim()"
-          (click)="addTask()"
-        >
-          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-item lines="none" class="category-select-item">
-        <ion-label>Asignar categoría</ion-label>
-        <ion-select interface="popover" [(ngModel)]="selectedCategoryId" placeholder="Sin categoría">
-          <ion-select-option [value]="null">Sin categoría</ion-select-option>
-          @if (categories$ | async; as categories) {
-            @for (category of categories; track category.id) {
-              <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
-            }
-          }
-        </ion-select>
-      </ion-item>
+      <ion-button shape="round" (click)="openTaskComposer()">
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+        Crear tarea
+      </ion-button>
     </section>
+
+    <ion-modal [isOpen]="isTaskComposerOpen" (didDismiss)="closeTaskComposer()" class="app-sheet-modal">
+      <ng-template>
+        <ion-content class="sheet-content">
+          <section class="composer-card composer-card--sheet app-sheet-card">
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+              <div>
+                <ion-text color="medium">Nueva tarea</ion-text>
+                <h2>¿Qué quieres hacer?</h2>
+              </div>
+
+              <ion-button fill="clear" color="medium" (click)="closeTaskComposer()">Cerrar</ion-button>
+            </div>
+
+            <div class="field-group field-group--featured">
+              <label class="field-label">Título de la tarea</label>
+              <ion-item lines="none" class="composer-input">
+                <ion-input
+                  [(ngModel)]="newTaskTitle"
+                  placeholder="Ej. Comprar pan o terminar el reporte"
+                  clearInput="true"
+                  inputmode="text"
+                  (keyup.enter)="addTask()"
+                ></ion-input>
+              </ion-item>
+            </div>
+
+            <div class="field-group">
+              <div class="field-copy">
+                <label class="field-label">Categoría</label>
+                <p>Opcional. Úsala para organizar mejor tus tareas.</p>
+              </div>
+              <ion-item lines="none" class="category-select-item category-select-item--stacked">
+                <ion-select interface="popover" [(ngModel)]="selectedCategoryId" placeholder="Sin categoría">
+                  <ion-select-option [value]="null">Sin categoría</ion-select-option>
+                  @if (categories$ | async; as categories) {
+                    @for (category of categories; track category.id) {
+                      <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
+                    }
+                  }
+                </ion-select>
+              </ion-item>
+            </div>
+
+            <div class="sheet-actions">
+              <ion-button fill="clear" color="medium" (click)="closeTaskComposer()">Cancelar</ion-button>
+              <ion-button [disabled]="!newTaskTitle.trim()" (click)="addTask()">
+                Guardar tarea
+              </ion-button>
+            </div>
+          </section>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 
     @if (filteredTasks$ | async; as tasks) {
       @if (tasks.length > 0) {

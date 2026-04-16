@@ -127,12 +127,117 @@ ion-toolbar {
   gap: 10px;
 }
 
+.composer-card--trigger {
+  padding: 20px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.composer-card--trigger h2 {
+  margin: 0 0 6px;
+  color: var(--ion-text-color);
+}
+
+.composer-card--trigger p {
+  margin: 0;
+  color: var(--ion-color-medium);
+}
+
+.composer-card--sheet {
+  margin: 16px;
+  padding: 16px;
+}
+
+.app-sheet-card {
+  max-width: 720px;
+  margin: 16px auto;
+  padding: 18px;
+  gap: 16px;
+}
+
+.sheet-handle {
+  width: 48px;
+  height: 5px;
+  margin: 2px auto 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ion-color-medium) 32%, transparent);
+}
+
+.sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sheet-header h2 {
+  margin: 6px 0 8px;
+  color: var(--ion-text-color);
+}
+
+.sheet-header p {
+  margin: 0;
+  color: var(--ion-color-medium);
+}
+
+.sheet-content {
+  --background: var(--page-background);
+}
+
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
+.field-group--featured {
+  gap: 10px;
+}
+
+.field-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.field-copy p {
+  margin: 0;
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+}
+
+.field-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ion-text-color);
+}
+
+.category-select-item--stacked {
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+  border: 1px solid color-mix(in srgb, var(--ion-color-medium) 10%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--ion-background-color) 88%, transparent);
+}
+
+.category-select-item--stacked ion-select {
+  width: 100%;
+}
+
+.category-select-item--stacked {
+  --min-height: 60px;
+}
+
+.sheet-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .composer-input {
   --background: color-mix(in srgb, var(--ion-background-color) 88%, transparent);
   --border-radius: 18px;
   --padding-start: 14px;
-  --inner-padding-end: 8px;
-  --min-height: 64px;
+  --inner-padding-end: 10px;
+  --min-height: 58px;
 }
 
 .composer-input ion-input {
@@ -244,6 +349,19 @@ ion-item-option {
 @media (max-width: 576px) {
   .page-shell {
     padding-inline: 14px;
+  }
+
+  .sheet-header,
+  .sheet-actions {
+    flex-direction: column;
+  }
+
+  .sheet-actions ion-button {
+    width: 100%;
+  }
+
+  .composer-card--trigger {
+    grid-template-columns: 1fr;
   }
 
   .stats-grid {
