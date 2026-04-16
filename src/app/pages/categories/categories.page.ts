@@ -36,6 +36,7 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
   selector: 'app-categories',
   templateUrl: 'categories.page.html',
   styleUrls: ['categories.page.scss'],
+  standalone: true,
   imports: [
     AsyncPipe,
     DatePipe,
