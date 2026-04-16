@@ -200,8 +200,8 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 - **APK generado**: `platforms/android/app/build/outputs/apk/debug/app-debug.apk`
 - **Enlace de descarga del APK**: agregar URL pública aquí si se publica en Release, Drive o similar
 - **IPA**: agregar ruta o enlace aquí
-- **Video demo app**: https://drive.google.com/file/d/1ZS41PjuWCK6U6cAXO58bMNkZSYl8L4y_/view?usp=sharing
-- **Video demo Firebase Remote Config**: https://drive.google.com/file/d/1QhXQX7W4K-0l36QKlMZSnnDT_9LN1tKd/view?usp=sharing
+- **Video demo app**: <a href="https://drive.google.com/file/d/1ZS41PjuWCK6U6cAXO58bMNkZSYl8L4y_/view?usp=sharing" target="_blank" rel="noopener noreferrer">Ver video</a>
+- **Video demo Firebase Remote Config**: <a href="https://drive.google.com/file/d/1QhXQX7W4K-0l36QKlMZSnnDT_9LN1tKd/view?usp=sharing" target="_blank" rel="noopener noreferrer">Ver video</a>
 - **Capturas**:
   - **Aplicación funcionando en emulador Android**
 
@@ -214,9 +214,6 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
   - **QR de descarga para Android**
 
     ![QR Android](./assets/images/qr-android.png)
-- **QR Android**:
-
-  ![QR Android](./assets/images/qr-android.png)
 
 - **QR iOS**:
 
