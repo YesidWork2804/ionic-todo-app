@@ -35,3 +35,115 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+html,
+body {
+  background: linear-gradient(180deg, var(--app-gradient-start) 0%, var(--app-gradient-end) 100%);
+  color: var(--ion-text-color);
+  font-family: var(--ion-font-family);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+ion-app,
+ion-content,
+ion-router-outlet {
+  background: transparent;
+}
+
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-toolbar-color);
+  backdrop-filter: blur(18px);
+}
+
+ion-title {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+ion-item {
+  --background: var(--ion-item-background);
+  --border-color: transparent;
+  --color: var(--ion-text-color);
+  border-radius: var(--app-radius-sm);
+}
+
+ion-card,
+.app-surface {
+  background: var(--ion-card-background);
+  border: 1px solid var(--ion-border-color);
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-md);
+  backdrop-filter: blur(16px);
+}
+
+ion-button {
+  --border-radius: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+ion-badge {
+  border-radius: 999px;
+  padding-inline: 10px;
+  padding-block: 6px;
+  font-weight: 700;
+}
+
+ion-input,
+ion-select,
+ion-textarea {
+  --color: var(--ion-text-color);
+  --placeholder-color: var(--app-text-muted);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--app-text-primary);
+}
+
+p,
+ion-note,
+ion-text[color='medium'] {
+  color: var(--app-text-secondary);
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--ion-color-primary) 24%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color-scheme: dark;
+  }
+
+  ion-toolbar {
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.28);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html,
+  body {
+    color-scheme: light;
+  }
+}
