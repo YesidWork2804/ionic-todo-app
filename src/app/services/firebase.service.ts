@@ -27,12 +27,8 @@ export class FirebaseService {
         show_statistics: true,
       };
 
-      console.log('Fetching Remote Config...');
       await fetchAndActivate(remoteConfig);
-      console.log('Remote Config fetched successfully');
-
       const showStatisticsValue = getBoolean(remoteConfig, 'show_statistics');
-      console.log('show_statistics value:', showStatisticsValue);
 
       this.showStatisticsSubject.next(showStatisticsValue);
     } catch (error) {
