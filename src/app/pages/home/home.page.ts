@@ -17,6 +17,7 @@ import {
   IonLabel,
   IonList,
   IonModal,
+  IonProgressBar,
   IonSelect,
   IonSelectOption,
   IonText,
@@ -65,6 +66,7 @@ import { FirebaseService } from '../../services/firebase.service';
     IonLabel,
     IonList,
     IonModal,
+    IonProgressBar,
     IonSelect,
     IonSelectOption,
     IonText,
@@ -114,6 +116,9 @@ export class HomePage {
       return Math.round((completed / tasks.length) * 100);
     }),
   );
+  readonly progressValue$: Observable<number> = this.progressPercentage$.pipe(
+    map((progressPercentage) => progressPercentage / 100),
+  );
 
   readonly showStatistics$ = this.firebaseService.showStatistics$;
 
@@ -122,6 +127,7 @@ export class HomePage {
   selectedFilterCategoryId = '';
   themeMode: ThemeMode = 'system';
   isTaskComposerOpen = false;
+  isRefreshingConfig = false;
 
   constructor(
     private readonly taskService: TaskService,
@@ -134,7 +140,13 @@ export class HomePage {
   }
 
   async refreshFirebaseConfig(): Promise<void> {
-    await this.firebaseService.refreshRemoteConfig();
+    this.isRefreshingConfig = true;
+
+    try {
+      await this.firebaseService.refreshRemoteConfig();
+    } finally {
+      this.isRefreshingConfig = false;
+    }
   }
 
   async addTask(modal?: IonModal): Promise<void> {
