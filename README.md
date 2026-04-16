@@ -197,6 +197,7 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 
 ## 📎 Entregables
 - **Repositorio público**: agregar URL del repositorio aquí
+- **Proyecto desplegado**: https://ionic-todo-app.netlify.app/
 - **APK generado**: `platforms/android/app/build/outputs/apk/debug/app-debug.apk`
 - **Enlace de descarga del APK**: https://drive.google.com/file/d/1UPkeegrw2C7u9J0BUzxRvRtw2UzFRbzS/view?usp=sharing
 - **IPA**: agregar ruta o enlace aquí
