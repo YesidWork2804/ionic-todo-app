@@ -1,7 +1,95 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title></ion-title>
+    <ion-title>My Tasks</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"></ion-content>
+<ion-content [fullscreen]="true" class="home-content">
+  <div class="page-shell">
+    <section class="hero-card">
+      <div>
+        <ion-text color="medium">Organiza tu día</ion-text>
+        <h1>To-Do moderno y simple</h1>
+        <p>Crea tareas, márcalas como completadas y elimínalas con swipe.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Pendientes</span>
+          <ion-badge color="primary">{{ pendingCount$ | async }}</ion-badge>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Completadas</span>
+          <ion-badge color="success">{{ completedCount$ | async }}</ion-badge>
+        </div>
+      </div>
+    </section>
+
+    <section class="composer-card">
+      <ion-item lines="none" class="composer-input">
+        <ion-input
+          [(ngModel)]="newTaskTitle"
+          placeholder="Escribe una nueva tarea"
+          clearInput="true"
+          inputmode="text"
+          (keyup.enter)="addTask()"
+        ></ion-input>
+
+        <ion-button
+          slot="end"
+          shape="round"
+          fill="solid"
+          [disabled]="!newTaskTitle.trim()"
+          (click)="addTask()"
+        >
+          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </section>
+
+    @if (tasks$ | async; as tasks) {
+      @if (tasks.length > 0) {
+        <ion-list lines="none" class="task-list">
+          @for (task of tasks; track task.id) {
+            <ion-item-sliding #slidingItem>
+              <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
+                <ion-checkbox
+                  slot="start"
+                  [checked]="task.completed"
+                  (ionChange)="toggleTask(task.id)"
+                ></ion-checkbox>
+
+                <ion-label>
+                  <h2>{{ task.title }}</h2>
+                  <p>
+                    <ion-icon name="checkmark-done-outline"></ion-icon>
+                    Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
+                  </p>
+                </ion-label>
+
+                <ion-note slot="end" [color]="task.completed ? 'success' : 'primary'">
+                  {{ task.completed ? 'Done' : 'Open' }}
+                </ion-note>
+              </ion-item>
+
+              <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="deleteTask(task.id, slidingItem)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          }
+        </ion-list>
+      } @else {
+        <section class="empty-state">
+          <div class="empty-icon">
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+          </div>
+          <h2>No tienes tareas todavía</h2>
+          <p>Agrega tu primera tarea para comenzar a organizarte.</p>
+        </section>
+      }
+    }
+  </div>
+</ion-content>
