@@ -74,7 +74,12 @@
       </ion-button>
     </section>
 
-    <ion-modal [isOpen]="isTaskComposerOpen" (didDismiss)="closeTaskComposer()" class="app-sheet-modal">
+    <ion-modal
+      #taskComposerModal
+      [isOpen]="isTaskComposerOpen"
+      (didDismiss)="closeTaskComposer()"
+      class="app-sheet-modal"
+    >
       <ng-template>
         <ion-content class="sheet-content">
           <section class="composer-card composer-card--sheet app-sheet-card">
@@ -82,46 +87,66 @@
 
             <div class="sheet-header">
               <div>
-                <ion-text color="medium">Nueva tarea</ion-text>
-                <h2>¿Qué quieres hacer?</h2>
+                <h2>Crea una tarea en segundos</h2>
+                <p>Define lo importante primero y organiza la tarea con una categoría.</p>
               </div>
 
               <ion-button fill="clear" color="medium" (click)="closeTaskComposer()">Cerrar</ion-button>
             </div>
 
-            <div class="field-group field-group--featured">
-              <label class="field-label">Título de la tarea</label>
-              <ion-item lines="none" class="composer-input">
+            <div class="sheet-panel">
+              <div class="sheet-panel__title">
+                <div class="sheet-row__icon">
+                  <ion-icon name="create-outline"></ion-icon>
+                </div>
+                <div>
+                  <label class="field-label">Tarea</label>
+                  <p>Escribe una acción clara y fácil de entender.</p>
+                </div>
+              </div>
+
+              <ion-item lines="none" class="composer-input composer-input--large composer-input--panel">
                 <ion-input
                   [(ngModel)]="newTaskTitle"
                   placeholder="Ej. Comprar pan o terminar el reporte"
                   clearInput="true"
                   inputmode="text"
-                  (keyup.enter)="addTask()"
+                  (keyup.enter)="addTask(taskComposerModal)"
                 ></ion-input>
               </ion-item>
             </div>
 
-            <div class="field-group">
-              <div class="field-copy">
-                <label class="field-label">Categoría</label>
-                <p>Opcional. Úsala para organizar mejor tus tareas.</p>
+            <div class="sheet-panel sheet-panel--compact">
+              <div class="sheet-row">
+                <div class="sheet-row__main">
+                  <div class="sheet-row__icon">
+                    <ion-icon name="folder-open-outline"></ion-icon>
+                  </div>
+
+                  <div class="field-copy">
+                    <label class="field-label">Categoría</label>
+                    <p>Opcional. Úsala para agrupar y filtrar tareas.</p>
+                  </div>
+                </div>
+
+                <div class="sheet-row__control">
+                  <ion-item lines="none" class="category-select-item category-select-item--stacked category-select-item--inline">
+                    <ion-select interface="popover" [(ngModel)]="selectedCategoryId" placeholder="Sin categoría">
+                      <ion-select-option [value]="null">Sin categoría</ion-select-option>
+                      @if (categories$ | async; as categories) {
+                        @for (category of categories; track category.id) {
+                          <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
+                        }
+                      }
+                    </ion-select>
+                  </ion-item>
+                </div>
               </div>
-              <ion-item lines="none" class="category-select-item category-select-item--stacked">
-                <ion-select interface="popover" [(ngModel)]="selectedCategoryId" placeholder="Sin categoría">
-                  <ion-select-option [value]="null">Sin categoría</ion-select-option>
-                  @if (categories$ | async; as categories) {
-                    @for (category of categories; track category.id) {
-                      <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
-                    }
-                  }
-                </ion-select>
-              </ion-item>
             </div>
 
             <div class="sheet-actions">
               <ion-button fill="clear" color="medium" (click)="closeTaskComposer()">Cancelar</ion-button>
-              <ion-button [disabled]="!newTaskTitle.trim()" (click)="addTask()">
+              <ion-button [disabled]="!newTaskTitle.trim()" (click)="addTask(taskComposerModal)">
                 Guardar tarea
               </ion-button>
             </div>
@@ -144,11 +169,18 @@
                   ></ion-checkbox>
 
                   <ion-label>
-                    <h2>{{ task.title }}</h2>
+                    <div class="task-topline">
+                      <h2>{{ task.title }}</h2>
+                      <span class="task-status-chip" [ngClass]="task.completed ? 'task-status-chip--completed' : 'task-status-chip--pending'">
+                        {{ task.completed ? 'Completada' : 'Pendiente' }}
+                      </span>
+                    </div>
+
                     <p>
                       <ion-icon name="checkmark-done-outline"></ion-icon>
                       Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
                     </p>
+
                     <div class="task-meta">
                       <span
                         class="task-category-chip"
@@ -159,10 +191,6 @@
                       </span>
                     </div>
                   </ion-label>
-
-                  <ion-note slot="end" [color]="task.completed ? 'success' : 'primary'">
-                    {{ task.completed ? 'Completada' : 'Pendiente' }}
-                  </ion-note>
                 </ion-item>
 
                 <ion-item-options side="end">

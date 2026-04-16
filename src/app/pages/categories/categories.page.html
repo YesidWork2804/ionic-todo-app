@@ -54,7 +54,12 @@
       </ion-button>
     </section>
 
-    <ion-modal [isOpen]="isCategoryComposerOpen" (didDismiss)="closeCategoryComposer()" class="app-sheet-modal">
+    <ion-modal
+      #categoryComposerModal
+      [isOpen]="isCategoryComposerOpen"
+      (didDismiss)="closeCategoryComposer()"
+      class="app-sheet-modal"
+    >
       <ng-template>
         <ion-content class="sheet-content">
           <section class="composer-card composer-card--sheet app-sheet-card">
@@ -62,9 +67,8 @@
 
             <div class="sheet-header">
               <div>
-                <ion-text color="medium">{{ isEditing ? 'Modo edición' : 'Nueva categoría' }}</ion-text>
                 <h2>{{ isEditing ? 'Editar categoría' : 'Crear categoría' }}</h2>
-                <p>{{ isEditing ? 'Actualiza el nombre o el color de la categoría.' : 'Crea una categoría con nombre y color.' }}</p>
+                <p>{{ isEditing ? 'Actualiza el nombre o el color de la categoría.' : 'Define un nombre y un color para identificarla fácil.' }}</p>
               </div>
 
               <ion-button fill="clear" color="medium" (click)="closeCategoryComposer()">Cerrar</ion-button>
@@ -76,30 +80,31 @@
               }
             </div>
 
-            <ion-item lines="none" class="composer-input">
-              <ion-input
-                [(ngModel)]="form.name"
-                placeholder="Nombre de la categoría"
-                clearInput="true"
-                inputmode="text"
-                (keyup.enter)="submit()"
-              ></ion-input>
+            <div class="sheet-section">
+              <div class="sheet-section__header">
+                <div class="field-copy">
+                  <label class="field-label">Nombre de la categoría</label>
+                  <p>Elige un nombre breve que la identifique fácilmente.</p>
+                </div>
+              </div>
 
-              <ion-button
-                slot="end"
-                shape="round"
-                fill="solid"
-                [disabled]="!form.name.trim()"
-                (click)="submit()"
-              >
-                <ion-icon slot="icon-only" [name]="isEditing ? 'save-outline' : 'add-outline'"></ion-icon>
-              </ion-button>
-            </ion-item>
+              <ion-item lines="none" class="composer-input composer-input--large">
+                <ion-input
+                  [(ngModel)]="form.name"
+                  placeholder="Ej. Trabajo, Personal o Compras"
+                  clearInput="true"
+                  inputmode="text"
+                  (keyup.enter)="submit(categoryComposerModal)"
+                ></ion-input>
+              </ion-item>
+            </div>
 
-            <div class="field-group field-group--colors">
-              <div class="field-copy">
+            <div class="sheet-section field-group field-group--colors">
+              <div class="sheet-section__header">
+                <div class="field-copy">
                 <label class="field-label">Color de la categoría</label>
                 <p>Este color se mostrará en las tareas asignadas.</p>
+              </div>
               </div>
 
               <div class="selected-color-preview">
@@ -126,7 +131,7 @@
 
             <div class="sheet-actions">
               <ion-button fill="clear" color="medium" (click)="closeCategoryComposer()">Cancelar</ion-button>
-              <ion-button [disabled]="!form.name.trim()" (click)="submit()">
+              <ion-button [disabled]="!form.name.trim()" (click)="submit(categoryComposerModal)">
                 {{ isEditing ? 'Guardar cambios' : 'Guardar categoría' }}
               </ion-button>
             </div>

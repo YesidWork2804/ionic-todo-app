@@ -17,7 +17,6 @@ import {
   IonLabel,
   IonList,
   IonModal,
-  IonNote,
   IonSelect,
   IonSelectOption,
   IonText,
@@ -25,7 +24,13 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addOutline, checkmarkDoneOutline, trashOutline } from 'ionicons/icons';
+import { 
+  addOutline, 
+  checkmarkDoneOutline, 
+  createOutline, 
+  folderOpenOutline, 
+  trashOutline 
+} from 'ionicons/icons';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 import { Category } from '../../models/category.model';
@@ -58,7 +63,6 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
     IonLabel,
     IonList,
     IonModal,
-    IonNote,
     IonSelect,
     IonSelectOption,
     IonText,
@@ -108,14 +112,19 @@ export class HomePage {
     private readonly categoryService: CategoryService,
     private readonly themeService: ThemeService,
   ) {
-    addIcons({ addOutline, checkmarkDoneOutline, trashOutline });
+    addIcons({ addOutline, checkmarkDoneOutline, createOutline, folderOpenOutline, trashOutline });
     this.themeMode = this.themeService.getCurrentThemeMode();
   }
 
-  async addTask(): Promise<void> {
+  async addTask(modal?: IonModal): Promise<void> {
     await this.taskService.addTask(this.newTaskTitle, this.selectedCategoryId);
     this.newTaskTitle = '';
     this.selectedCategoryId = null;
+
+    if (modal) {
+      await modal.dismiss();
+    }
+
     this.isTaskComposerOpen = false;
   }
 

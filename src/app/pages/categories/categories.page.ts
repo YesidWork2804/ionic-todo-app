@@ -88,7 +88,7 @@ export class CategoriesPage {
     return this.form.id.length > 0;
   }
 
-  async submit(): Promise<void> {
+  async submit(modal?: IonModal): Promise<void> {
     if (this.isEditing) {
       await this.categoryService.updateCategory(this.form.id, {
         name: this.form.name,
@@ -99,6 +99,11 @@ export class CategoriesPage {
     }
 
     this.resetForm();
+
+    if (modal) {
+      await modal.dismiss();
+    }
+
     this.isCategoryComposerOpen = false;
   }
 

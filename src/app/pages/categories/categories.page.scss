@@ -173,10 +173,26 @@ ion-toolbar {
   --background: var(--page-background);
 }
 
+.sheet-section {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--ion-background-color) 84%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ion-color-medium) 10%, transparent);
+}
+
+.sheet-section__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
 .sheet-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 4px;
 }
 
 .field-group {
@@ -206,6 +222,7 @@ ion-toolbar {
   border-radius: 20px;
   background: color-mix(in srgb, var(--ion-background-color) 82%, transparent);
   border: 1px solid color-mix(in srgb, var(--ion-color-medium) 10%, transparent);
+  gap: 14px;
 }
 
 .selected-color-preview {
@@ -350,7 +367,8 @@ ion-item-option {
 
   .sheet-header,
   .sheet-actions,
-  .form-header {
+  .form-header,
+  .sheet-section__header {
     flex-direction: column;
   }
 

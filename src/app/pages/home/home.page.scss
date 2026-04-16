@@ -184,6 +184,61 @@ ion-toolbar {
   --background: var(--page-background);
 }
 
+.sheet-panel {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--ion-background-color) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ion-color-primary) 12%, var(--ion-color-medium) 6%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 8%, transparent);
+}
+
+.sheet-panel--compact {
+  gap: 0;
+}
+
+.sheet-panel__title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sheet-panel__title .sheet-row__icon,
+.sheet-row__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--ion-color-primary) 14%, transparent);
+  color: var(--ion-color-primary);
+  flex-shrink: 0;
+}
+
+.sheet-panel__title .sheet-row__icon ion-icon,
+.sheet-row__icon ion-icon {
+  font-size: 0.95rem;
+}
+
+.sheet-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sheet-row__main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sheet-row__control {
+  min-width: 180px;
+}
+
 .field-group {
   display: grid;
   gap: 8px;
@@ -226,10 +281,15 @@ ion-toolbar {
   --min-height: 60px;
 }
 
+.category-select-item--inline {
+  min-width: 180px;
+}
+
 .sheet-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 4px;
 }
 
 .composer-input {
@@ -238,6 +298,15 @@ ion-toolbar {
   --padding-start: 14px;
   --inner-padding-end: 10px;
   --min-height: 58px;
+}
+
+.composer-input--large {
+  --min-height: 62px;
+}
+
+.composer-input--panel {
+  border: 1px solid color-mix(in srgb, var(--ion-color-primary) 22%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ion-color-primary) 8%, transparent);
 }
 
 .composer-input ion-input {
@@ -250,8 +319,18 @@ ion-toolbar {
   --box-shadow: 0 10px 20px color-mix(in srgb, var(--ion-color-primary) 24%, transparent);
 }
 
+.task-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .task-meta {
   margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .task-category-chip {
@@ -315,6 +394,28 @@ ion-item-sliding {
   opacity: 0.86;
 }
 
+.task-status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.task-status-chip--pending {
+  background: color-mix(in srgb, var(--ion-color-medium) 10%, transparent);
+  color: var(--ion-color-medium);
+  border-color: color-mix(in srgb, var(--ion-color-medium) 14%, transparent);
+}
+
+.task-status-chip--completed {
+  background: color-mix(in srgb, var(--ion-color-success) 14%, transparent);
+  color: var(--ion-color-success);
+  border-color: color-mix(in srgb, var(--ion-color-success) 18%, transparent);
+}
+
 ion-item-option {
   border-radius: 0 20px 20px 0;
 }
@@ -352,8 +453,16 @@ ion-item-option {
   }
 
   .sheet-header,
-  .sheet-actions {
+  .sheet-actions,
+  .sheet-row,
+  .task-topline {
     flex-direction: column;
+  }
+
+  .sheet-row__control,
+  .category-select-item--inline {
+    width: 100%;
+    min-width: 0;
   }
 
   .sheet-actions ion-button {
