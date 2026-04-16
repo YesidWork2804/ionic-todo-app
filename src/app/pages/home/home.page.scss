@@ -79,8 +79,25 @@ ion-toolbar {
   font-weight: 600;
 }
 
+.filter-card {
+  padding: 0;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--ion-background-color) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ion-color-medium) 10%, transparent);
+}
+
+.filter-item,
+.category-select-item {
+  --background: transparent;
+  --padding-start: 14px;
+  --inner-padding-end: 10px;
+  --min-height: 58px;
+}
+
 .composer-card {
   padding: 10px;
+  display: grid;
+  gap: 10px;
 }
 
 .composer-input {
@@ -99,6 +116,21 @@ ion-toolbar {
 .composer-input ion-button {
   margin-inline-start: 8px;
   --box-shadow: 0 10px 20px color-mix(in srgb, var(--ion-color-primary) 24%, transparent);
+}
+
+.task-meta {
+  margin-top: 8px;
+}
+
+.task-category-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ion-color-primary) 12%, transparent);
+  color: var(--ion-color-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .task-list {

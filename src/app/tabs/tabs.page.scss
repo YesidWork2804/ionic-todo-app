@@ -1,0 +1,27 @@
+.custom-tab-bar {
+  --background: color-mix(in srgb, var(--ion-background-color) 96%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--ion-color-medium) 12%, transparent);
+  backdrop-filter: blur(20px);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.custom-tab-bar ion-tab-button {
+  --color: var(--ion-color-medium);
+  --color-selected: var(--ion-color-primary);
+  --background: transparent;
+  --background-selected: transparent;
+}
+
+.custom-tab-bar ion-tab-button::part(native) {
+  padding: 10px 0;
+}
+
+.custom-tab-bar ion-icon {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.custom-tab-bar ion-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+}

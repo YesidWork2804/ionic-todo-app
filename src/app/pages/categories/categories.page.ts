@@ -5,7 +5,6 @@ import {
   IonBadge,
   IonButton,
   IonContent,
-  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
@@ -16,8 +15,6 @@ import {
   IonList,
   IonNote,
   IonText,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline, createOutline, folderOpenOutline, saveOutline, trashOutline } from 'ionicons/icons';
@@ -38,7 +35,6 @@ import { CategoryService } from '../../services/category.service';
     IonBadge,
     IonButton,
     IonContent,
-    IonHeader,
     IonIcon,
     IonInput,
     IonItem,
@@ -49,8 +45,6 @@ import { CategoryService } from '../../services/category.service';
     IonList,
     IonNote,
     IonText,
-    IonTitle,
-    IonToolbar,
   ],
 })
 export class CategoriesPage {

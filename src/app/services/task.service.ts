@@ -20,7 +20,7 @@ export class TaskService {
     return this.tasksSubject.asObservable();
   }
 
-  async addTask(title: string): Promise<void> {
+  async addTask(title: string, categoryId: string | null = null): Promise<void> {
     const normalizedTitle = title.trim();
 
     if (!normalizedTitle) {
@@ -33,6 +33,7 @@ export class TaskService {
       {
         id: this.createTaskId(),
         title: normalizedTitle,
+        categoryId,
         completed: false,
         createdAt: new Date().toISOString(),
       },
@@ -67,10 +68,11 @@ export class TaskService {
 
   private async init(): Promise<void> {
     const storageInstance = await this.storage.create();
-    const storedTasks = (await storageInstance.get(this.storageKey)) as Task[] | null;
+    const storedTasks = (await storageInstance.get(this.storageKey)) as Array<Partial<Task>> | null;
+    const normalizedTasks = (storedTasks ?? []).map((task) => this.normalizeTask(task));
 
     this.storageReady = true;
-    this.tasksSubject.next(storedTasks ?? []);
+    this.tasksSubject.next(normalizedTasks);
   }
 
   private async ensureStorageReady(): Promise<void> {
@@ -84,6 +86,16 @@ export class TaskService {
   private async updateTasks(tasks: Task[]): Promise<void> {
     this.tasksSubject.next(tasks);
     await this.storage.set(this.storageKey, tasks);
+  }
+
+  private normalizeTask(task: Partial<Task>): Task {
+    return {
+      id: task.id ?? this.createTaskId(),
+      title: task.title ?? '',
+      categoryId: task.categoryId ?? null,
+      completed: task.completed ?? false,
+      createdAt: task.createdAt ?? new Date().toISOString(),
+    };
   }
 
   private createTaskId(): string {
