@@ -1,0 +1,113 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Categories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="categories-content">
+  <div class="page-shell">
+    <section class="hero-card">
+      <div>
+        <ion-text color="medium">Feature principal</ion-text>
+        <h1>Gestiona tus categorías</h1>
+        <p>Crea, edita y elimina categorías para organizar mejor tus tareas.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total</span>
+          <ion-badge color="secondary">{{ totalCategories$ | async }}</ion-badge>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Modo</span>
+          <ion-badge [color]="isEditing ? 'warning' : 'success'">{{ isEditing ? 'Edición' : 'Creación' }}</ion-badge>
+        </div>
+      </div>
+    </section>
+
+    <section class="composer-card">
+      <div class="form-header">
+        <div>
+          <h2>{{ isEditing ? 'Editar categoría' : 'Nueva categoría' }}</h2>
+          <p>{{ isEditing ? 'Actualiza el nombre o el color.' : 'Crea una categoría con nombre y color.' }}</p>
+        </div>
+
+        @if (isEditing) {
+          <ion-button fill="clear" color="medium" (click)="resetForm()">Cancelar</ion-button>
+        }
+      </div>
+
+      <ion-item lines="none" class="composer-input">
+        <ion-input
+          [(ngModel)]="form.name"
+          placeholder="Nombre de la categoría"
+          clearInput="true"
+          inputmode="text"
+          (keyup.enter)="submit()"
+        ></ion-input>
+
+        <ion-button
+          slot="end"
+          shape="round"
+          fill="solid"
+          [disabled]="!form.name.trim()"
+          (click)="submit()"
+        >
+          <ion-icon slot="icon-only" [name]="isEditing ? 'save-outline' : 'add-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div class="color-picker">
+        @for (color of presetColors; track color) {
+          <button
+            type="button"
+            class="color-chip"
+            [class.color-chip--active]="form.color === color"
+            [style.background]="color"
+            (click)="selectColor(color)"
+            [attr.aria-label]="'Seleccionar color ' + color"
+          ></button>
+        }
+      </div>
+    </section>
+
+    @if (categories$ | async; as categories) {
+      @if (categories.length > 0) {
+        <ion-list lines="none" class="category-list">
+          @for (category of categories; track category.id) {
+            <ion-item-sliding #slidingItem>
+              <ion-item class="category-item">
+                <div slot="start" class="category-color" [ngStyle]="{ 'background-color': category.color }"></div>
+
+                <ion-label>
+                  <h2>{{ category.name }}</h2>
+                  <p>Actualizada el {{ category.updatedAt | date: 'dd/MM/yyyy' }}</p>
+                </ion-label>
+
+                <ion-note slot="end">{{ category.color }}</ion-note>
+              </ion-item>
+
+              <ion-item-options side="end">
+                <ion-item-option color="warning" (click)="startEdit(category, slidingItem)">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-item-option>
+                <ion-item-option color="danger" (click)="deleteCategory(category.id, slidingItem)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          }
+        </ion-list>
+      } @else {
+        <section class="empty-state">
+          <div class="empty-icon">
+            <ion-icon name="folder-open-outline"></ion-icon>
+          </div>
+          <h2>Aún no hay categorías</h2>
+          <p>Crea la primera para empezar a clasificar tus tareas.</p>
+        </section>
+      }
+    }
+  </div>
+</ion-content>
