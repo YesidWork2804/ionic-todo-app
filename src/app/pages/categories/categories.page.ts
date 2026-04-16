@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AsyncPipe, DatePipe, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -41,6 +42,7 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
     FormsModule,
     NgStyle,
     RouterLink,
+    ScrollingModule,
     IonBadge,
     IonButton,
     IonContent,
@@ -61,6 +63,7 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
     IonTitle,
     IonToolbar,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoriesPage {
   readonly categories$: Observable<Category[]> = this.categoryService.getCategories();
@@ -159,5 +162,9 @@ export class CategoriesPage {
   onThemeModeChange(themeMode: ThemeMode): void {
     this.themeMode = themeMode;
     this.themeService.setThemeMode(themeMode);
+  }
+
+  trackByCategoryId(_: number, category: Category): string {
+    return category.id;
   }
 }

@@ -53,7 +53,7 @@
             <ion-select-option value="">Todas</ion-select-option>
             <ion-select-option value="uncategorized">Sin categoría</ion-select-option>
             @if (categories$ | async; as categories) {
-              @for (category of categories; track category.id) {
+              @for (category of categories; track trackByCategoryId($index, category)) {
                 <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
               }
             }
@@ -184,7 +184,7 @@
                     <ion-select interface="popover" [(ngModel)]="selectedCategoryId" placeholder="Sin categoría">
                       <ion-select-option [value]="null">Sin categoría</ion-select-option>
                       @if (categories$ | async; as categories) {
-                        @for (category of categories; track category.id) {
+                        @for (category of categories; track trackByCategoryId($index, category)) {
                           <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
                         }
                       }
@@ -205,53 +205,51 @@
       </ng-template>
     </ion-modal>
 
-    @if (filteredTasks$ | async; as tasks) {
+    @if (taskViewModels$ | async; as tasks) {
       @if (tasks.length > 0) {
-        <ion-list lines="none" class="task-list">
-          @if (categories$ | async; as categories) {
-            @for (task of tasks; track task.id) {
-              <ion-item-sliding #slidingItem>
-                <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
-                  <ion-checkbox
-                    slot="start"
-                    [checked]="task.completed"
-                    (ionChange)="toggleTask(task.id)"
-                  ></ion-checkbox>
+        <cdk-virtual-scroll-viewport class="task-viewport" [itemSize]="116" [minBufferPx]="464" [maxBufferPx]="928">
+          <ion-list lines="none" class="task-list">
+            <ion-item-sliding #slidingItem *cdkVirtualFor="let task of tasks; trackBy: trackByTaskId">
+              <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
+                <ion-checkbox
+                  slot="start"
+                  [checked]="task.completed"
+                  (ionChange)="toggleTask(task.id)"
+                ></ion-checkbox>
 
-                  <ion-label>
-                    <div class="task-topline">
-                      <h2>{{ task.title }}</h2>
-                      <span class="task-status-chip" [ngClass]="task.completed ? 'task-status-chip--completed' : 'task-status-chip--pending'">
-                        {{ task.completed ? 'Completada' : 'Pendiente' }}
-                      </span>
-                    </div>
+                <ion-label>
+                  <div class="task-topline">
+                    <h2>{{ task.title }}</h2>
+                    <span class="task-status-chip" [ngClass]="task.completed ? 'task-status-chip--completed' : 'task-status-chip--pending'">
+                      {{ task.completed ? 'Completada' : 'Pendiente' }}
+                    </span>
+                  </div>
 
-                    <p>
-                      <ion-icon name="checkmark-done-outline"></ion-icon>
-                      Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
-                    </p>
+                  <p>
+                    <ion-icon name="checkmark-done-outline"></ion-icon>
+                    Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
+                  </p>
 
-                    <div class="task-meta">
-                      <span
-                        class="task-category-chip"
-                        [style.background]="getCategoryColor(task.categoryId, categories)"
-                        [style.color]="'#ffffff'"
-                      >
-                        {{ getCategoryName(task.categoryId, categories) }}
-                      </span>
-                    </div>
-                  </ion-label>
-                </ion-item>
+                  <div class="task-meta">
+                    <span
+                      class="task-category-chip"
+                      [style.background]="task.categoryColor"
+                      [style.color]="'#ffffff'"
+                    >
+                      {{ task.categoryName }}
+                    </span>
+                  </div>
+                </ion-label>
+              </ion-item>
 
-                <ion-item-options side="end">
-                  <ion-item-option color="danger" (click)="deleteTask(task.id, slidingItem)">
-                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                  </ion-item-option>
-                </ion-item-options>
-              </ion-item-sliding>
-            }
-          }
-        </ion-list>
+              <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="deleteTask(task.id, slidingItem)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </cdk-virtual-scroll-viewport>
       } @else {
         <section class="empty-state">
           <div class="empty-icon">

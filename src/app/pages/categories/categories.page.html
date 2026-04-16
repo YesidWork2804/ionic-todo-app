@@ -142,9 +142,9 @@
 
     @if (categories$ | async; as categories) {
       @if (categories.length > 0) {
-        <ion-list lines="none" class="category-list">
-          @for (category of categories; track category.id) {
-            <ion-item-sliding #slidingItem>
+        <cdk-virtual-scroll-viewport class="category-viewport" [itemSize]="88" [minBufferPx]="352" [maxBufferPx]="704">
+          <ion-list lines="none" class="category-list">
+            <ion-item-sliding #slidingItem *cdkVirtualFor="let category of categories; trackBy: trackByCategoryId">
               <ion-item class="category-item">
                 <div slot="start" class="category-color" [ngStyle]="{ 'background-color': category.color }"></div>
 
@@ -165,8 +165,8 @@
                 </ion-item-option>
               </ion-item-options>
             </ion-item-sliding>
-          }
-        </ion-list>
+          </ion-list>
+        </cdk-virtual-scroll-viewport>
       } @else {
         <section class="empty-state">
           <div class="empty-icon">

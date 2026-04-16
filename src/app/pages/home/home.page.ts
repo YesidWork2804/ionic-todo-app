@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -42,6 +43,11 @@ import { TaskService } from '../../services/task.service';
 import { ThemeMode, ThemeService } from '../../services/theme.service';
 import { FirebaseService } from '../../services/firebase.service';
 
+type TaskViewModel = Task & {
+  categoryName: string;
+  categoryColor: string;
+};
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -52,6 +58,7 @@ import { FirebaseService } from '../../services/firebase.service';
     FormsModule,
     NgClass,
     RouterLink,
+    ScrollingModule,
     IonBadge,
     IonButton,
     IonCheckbox,
@@ -73,6 +80,7 @@ import { FirebaseService } from '../../services/firebase.service';
     IonTitle,
     IonToolbar,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
   private readonly selectedFilterCategoryIdSubject = new BehaviorSubject<string>('');
@@ -97,6 +105,21 @@ export class HomePage {
         return task.categoryId === selectedFilterCategoryId && categories.some((category) => category.id === task.categoryId);
       }),
     ),
+  );
+  readonly taskViewModels$: Observable<TaskViewModel[]> = combineLatest([this.filteredTasks$, this.categories$]).pipe(
+    map(([tasks, categories]) => {
+      const categoryMap = new Map(categories.map((category) => [category.id, category]));
+
+      return tasks.map((task) => {
+        const category = task.categoryId ? categoryMap.get(task.categoryId) : null;
+
+        return {
+          ...task,
+          categoryName: category?.name ?? 'Sin categoría',
+          categoryColor: category?.color ?? 'var(--ion-color-medium)',
+        };
+      });
+    }),
   );
   readonly pendingCount$: Observable<number> = this.filteredTasks$.pipe(
     map((tasks) => tasks.filter((task) => !task.completed).length),
@@ -171,22 +194,6 @@ export class HomePage {
     this.selectedCategoryId = null;
   }
 
-  getCategoryName(categoryId: string | null, categories: Category[]): string {
-    if (!categoryId) {
-      return 'Sin categoría';
-    }
-
-    return categories.find((category) => category.id === categoryId)?.name ?? 'Sin categoría';
-  }
-
-  getCategoryColor(categoryId: string | null, categories: Category[]): string {
-    if (!categoryId) {
-      return 'var(--ion-color-medium)';
-    }
-
-    return categories.find((category) => category.id === categoryId)?.color ?? 'var(--ion-color-medium)';
-  }
-
   onFilterCategoryChange(categoryId: string): void {
     this.selectedFilterCategoryId = categoryId;
     this.selectedFilterCategoryIdSubject.next(categoryId);
@@ -211,5 +218,9 @@ export class HomePage {
 
   trackByTaskId(_: number, task: Task): string {
     return task.id;
+  }
+
+  trackByCategoryId(_: number, category: Category): string {
+    return category.id;
   }
 }
