@@ -16,6 +16,8 @@ import {
   IonLabel,
   IonList,
   IonNote,
+  IonSelect,
+  IonSelectOption,
   IonText,
   IonTitle,
   IonToolbar,
@@ -26,6 +28,7 @@ import { Observable, map } from 'rxjs';
 
 import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
+import { ThemeMode, ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-categories',
@@ -50,6 +53,8 @@ import { CategoryService } from '../../services/category.service';
     IonLabel,
     IonList,
     IonNote,
+    IonSelect,
+    IonSelectOption,
     IonText,
     IonTitle,
     IonToolbar,
@@ -58,6 +63,7 @@ import { CategoryService } from '../../services/category.service';
 export class CategoriesPage {
   readonly categories$: Observable<Category[]> = this.categoryService.getCategories();
   readonly totalCategories$: Observable<number> = this.categories$.pipe(map((categories) => categories.length));
+  themeMode: ThemeMode = 'system';
 
   form = {
     id: '',
@@ -67,8 +73,12 @@ export class CategoriesPage {
 
   readonly presetColors = ['#4f46e5', '#06b6d4', '#22c55e', '#f97316', '#ef4444', '#a855f7'];
 
-  constructor(private readonly categoryService: CategoryService) {
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly themeService: ThemeService,
+  ) {
     addIcons({ addOutline, createOutline, folderOpenOutline, saveOutline, trashOutline });
+    this.themeMode = this.themeService.getCurrentThemeMode();
   }
 
   get isEditing(): boolean {
@@ -125,5 +135,10 @@ export class CategoriesPage {
       name: '',
       color: '#4f46e5',
     };
+  }
+
+  onThemeModeChange(themeMode: ThemeMode): void {
+    this.themeMode = themeMode;
+    this.themeService.setThemeMode(themeMode);
   }
 }

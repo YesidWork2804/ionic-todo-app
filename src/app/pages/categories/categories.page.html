@@ -1,6 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Categories</ion-title>
+    <ion-title>Categorías</ion-title>
+    <ion-select
+      slot="end"
+      interface="popover"
+      [(ngModel)]="themeMode"
+      (ngModelChange)="onThemeModeChange($event)"
+      class="theme-switcher"
+    >
+      <ion-select-option value="system">Sistema</ion-select-option>
+      <ion-select-option value="light">Claro</ion-select-option>
+      <ion-select-option value="dark">Oscuro</ion-select-option>
+    </ion-select>
   </ion-toolbar>
 </ion-header>
 

@@ -67,6 +67,19 @@ ion-title {
   letter-spacing: -0.03em;
 }
 
+.theme-switcher {
+  min-width: 118px;
+  --placeholder-color: var(--app-text-secondary);
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --color: var(--ion-text-color);
+  margin-inline-end: 6px;
+  border: 1px solid var(--ion-border-color);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--ion-item-background) 88%, transparent);
+  box-shadow: var(--app-shadow-md);
+}
+
 ion-item {
   --background: var(--ion-item-background);
   --border-color: transparent;
@@ -146,4 +159,14 @@ a {
   body {
     color-scheme: light;
   }
+}
+
+html.theme-dark,
+html.theme-dark body {
+  color-scheme: dark;
+}
+
+html.theme-light,
+html.theme-light body {
+  color-scheme: light;
 }

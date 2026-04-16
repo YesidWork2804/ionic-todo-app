@@ -25,12 +25,13 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline, checkmarkDoneOutline, trashOutline } from 'ionicons/icons';
-import { Observable, combineLatest, map } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 import { Category } from '../../models/category.model';
 import { Task } from '../../models/task.model';
 import { CategoryService } from '../../services/category.service';
 import { TaskService } from '../../services/task.service';
+import { ThemeMode, ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -64,20 +65,26 @@ import { TaskService } from '../../services/task.service';
   ],
 })
 export class HomePage {
+  private readonly selectedFilterCategoryIdSubject = new BehaviorSubject<string>('');
+
   readonly categories$: Observable<Category[]> = this.categoryService.getCategories();
   readonly tasks$: Observable<Task[]> = this.taskService.getTasks();
-  readonly filteredTasks$: Observable<Task[]> = combineLatest([this.tasks$, this.categories$]).pipe(
-    map(([tasks, categories]) =>
+  readonly filteredTasks$: Observable<Task[]> = combineLatest([
+    this.tasks$,
+    this.categories$,
+    this.selectedFilterCategoryIdSubject,
+  ]).pipe(
+    map(([tasks, categories, selectedFilterCategoryId]) =>
       tasks.filter((task) => {
-        if (!this.selectedFilterCategoryId) {
+        if (!selectedFilterCategoryId) {
           return true;
         }
 
-        if (this.selectedFilterCategoryId === 'uncategorized') {
+        if (selectedFilterCategoryId === 'uncategorized') {
           return task.categoryId === null;
         }
 
-        return task.categoryId === this.selectedFilterCategoryId && categories.some((category) => category.id === task.categoryId);
+        return task.categoryId === selectedFilterCategoryId && categories.some((category) => category.id === task.categoryId);
       }),
     ),
   );
@@ -91,12 +98,15 @@ export class HomePage {
   newTaskTitle = '';
   selectedCategoryId: string | null = null;
   selectedFilterCategoryId = '';
+  themeMode: ThemeMode = 'system';
 
   constructor(
     private readonly taskService: TaskService,
     private readonly categoryService: CategoryService,
+    private readonly themeService: ThemeService,
   ) {
     addIcons({ addOutline, checkmarkDoneOutline, trashOutline });
+    this.themeMode = this.themeService.getCurrentThemeMode();
   }
 
   async addTask(): Promise<void> {
@@ -111,6 +121,24 @@ export class HomePage {
     }
 
     return categories.find((category) => category.id === categoryId)?.name ?? 'Sin categoría';
+  }
+
+  getCategoryColor(categoryId: string | null, categories: Category[]): string {
+    if (!categoryId) {
+      return 'var(--ion-color-medium)';
+    }
+
+    return categories.find((category) => category.id === categoryId)?.color ?? 'var(--ion-color-medium)';
+  }
+
+  onFilterCategoryChange(categoryId: string): void {
+    this.selectedFilterCategoryId = categoryId;
+    this.selectedFilterCategoryIdSubject.next(categoryId);
+  }
+
+  onThemeModeChange(themeMode: ThemeMode): void {
+    this.themeMode = themeMode;
+    this.themeService.setThemeMode(themeMode);
   }
 
   async toggleTask(taskId: string): Promise<void> {

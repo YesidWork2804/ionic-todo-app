@@ -1,6 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>My Tasks</ion-title>
+    <ion-title>Mi Lista de Tareas</ion-title>
+    <ion-select
+      slot="end"
+      interface="popover"
+      [(ngModel)]="themeMode"
+      (ngModelChange)="onThemeModeChange($event)"
+      class="theme-switcher"
+    >
+      <ion-select-option value="system">Sistema</ion-select-option>
+      <ion-select-option value="light">Claro</ion-select-option>
+      <ion-select-option value="dark">Oscuro</ion-select-option>
+    </ion-select>
   </ion-toolbar>
 </ion-header>
 
@@ -33,7 +44,12 @@
       <div class="filter-card">
         <ion-item lines="none" class="filter-item">
           <ion-label>Filtrar por categoría</ion-label>
-          <ion-select interface="popover" [(ngModel)]="selectedFilterCategoryId" placeholder="Todas">
+          <ion-select
+            interface="popover"
+            [(ngModel)]="selectedFilterCategoryId"
+            (ngModelChange)="onFilterCategoryChange($event)"
+            placeholder="Todas"
+          >
             <ion-select-option value="">Todas</ion-select-option>
             <ion-select-option value="uncategorized">Sin categoría</ion-select-option>
             @if (categories$ | async; as categories) {
@@ -100,7 +116,13 @@
                       Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
                     </p>
                     <div class="task-meta">
-                      <span class="task-category-chip">{{ getCategoryName(task.categoryId, categories) }}</span>
+                      <span
+                        class="task-category-chip"
+                        [style.background]="getCategoryColor(task.categoryId, categories)"
+                        [style.color]="'#ffffff'"
+                      >
+                        {{ getCategoryName(task.categoryId, categories) }}
+                      </span>
                     </div>
                   </ion-label>
 
