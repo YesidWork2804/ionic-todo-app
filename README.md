@@ -177,8 +177,8 @@ Se intentó mantener el proyecto ordenado y fácil de entender, para que cada pa
 
 ### 1. Principales desafíos enfrentados
 - Configurar el entorno de Cordova para compilar correctamente.
-- Resolver detalles de build en Android.
 - Ajustar el feature flag con Firebase Remote Config sin afectar la experiencia de uso.
+- Priorizar el tiempo disponible de la prueba para completar las funcionalidades principales y la validación en iOS, dejando la exportación del `IPA` firmado como paso posterior que requiere entorno Apple.
 
 ### 2. Técnicas de optimización aplicadas y por qué
 - **Lazy loading** para cargar solo las pantallas cuando se necesitan.
@@ -202,10 +202,6 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 
     ![App funcionando en emulador](./assets/images/app_funcionando_emulador.jpeg)
 
-  - **Resultado de rendimiento en PageSpeed**
-
-    ![Resultado de rendimiento en PageSpeed](./assets/images/rendimiento_apliacion_page_speed.jpeg)
-
   - **QR de descarga para Android**
 
     ![QR Android](./assets/images/qr-android.png)
@@ -219,9 +215,11 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
       </tr>
     </table>
 
+- **Estado del entregable iOS**: la aplicación fue validada en emulador iOS, como se evidencia en las capturas incluidas. No se adjunta un archivo `IPA` en esta entrega porque el proceso de certificación y firma para exportarlo puede tardar hasta 7 días, mientras que la ventana de la prueba era de 4 días. El proyecto queda preparado para completar esa exportación en un entorno Apple con `macOS`, `Xcode` y los certificados correspondientes.
+
 - **README completo**: incluido en este archivo
 
-## � Mejoras futuras
+## 🚀 Mejoras futuras
 Con más tiempo se podrían agregar:
 
 - **Sincronización en la nube**: integrar Firebase Firestore para guardar tareas y categorías en la nube y poder acceder desde múltiples dispositivos.
@@ -233,37 +231,6 @@ Con más tiempo se podrían agregar:
 - **Internacionalización (i18n)**: soportar múltiples idiomas.
 - **Temas personalizados**: permitir que los usuarios creen sus propios temas.
 
-## �💻 Comandos útiles
-### Instalar dependencias
-```bash
-npm install
-```
-
-### Ejecutar en navegador
-```bash
-ionic serve
-```
-
-### Build web
-```bash
-npm run build
-```
-
-### Build Android
-```bash
-npx cordova build android
-```
-
-### Run Android
-```bash
-npx cordova run android
-```
-
-### Build iOS
-```bash
-npx cordova build ios
-```
-
 ## 📍 Estado final de la prueba
 - **CRUD de tareas**: completado
 - **CRUD de categorías**: completado
@@ -271,4 +238,5 @@ npx cordova build ios
 - **Feature flag con Firebase Remote Config**: completado
 - **Compilación Android con Cordova**: completada
 - **APK generado**: completado
-- **IPA**: pendiente de agregar
+- **Validación en iOS**: comprobada en emulador (capturas incluidas)
+- **IPA**: no generado en esta entrega por limitación de firma/certificación en entorno Apple
