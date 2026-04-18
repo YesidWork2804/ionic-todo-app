@@ -165,6 +165,15 @@ export class CategoriesPage {
     this.themeService.setThemeMode(themeMode);
   }
 
+  getCategoryViewportHeight(categoryCount: number): number {
+    const itemHeight = 88;
+    const verticalPadding = 20;
+    const minimumHeight = 112;
+    const maximumHeight = 520;
+
+    return Math.min(Math.max(categoryCount * itemHeight + verticalPadding, minimumHeight), maximumHeight);
+  }
+
   trackByCategoryId(_: number, category: Category): string {
     return category.id;
   }

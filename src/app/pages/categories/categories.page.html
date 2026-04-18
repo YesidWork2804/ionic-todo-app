@@ -142,7 +142,13 @@
 
     @if (categories$ | async; as categories) {
       @if (categories.length > 0) {
-        <cdk-virtual-scroll-viewport class="category-viewport" [itemSize]="88" [minBufferPx]="352" [maxBufferPx]="704">
+        <cdk-virtual-scroll-viewport
+          class="category-viewport"
+          [style.height.px]="getCategoryViewportHeight(categories.length)"
+          [itemSize]="88"
+          [minBufferPx]="352"
+          [maxBufferPx]="704"
+        >
           <ion-list lines="none" class="category-list">
             <ion-item-sliding #slidingItem *cdkVirtualFor="let category of categories; trackBy: trackByCategoryId">
               <ion-item class="category-item">

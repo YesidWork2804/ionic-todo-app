@@ -205,6 +205,15 @@ export class HomePage {
     }
   }
 
+  getTaskViewportHeight(taskCount: number): number {
+    const itemHeight = 116;
+    const verticalPadding = 20;
+    const minimumHeight = 140;
+    const maximumHeight = 560;
+
+    return Math.min(Math.max(taskCount * itemHeight + verticalPadding, minimumHeight), maximumHeight);
+  }
+
   trackByTaskId(_: number, task: Task): string {
     return task.id;
   }

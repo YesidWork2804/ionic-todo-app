@@ -375,6 +375,10 @@ ion-toolbar {
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
 }
 
+.task-viewport {
+  overflow-y: auto;
+}
+
 .task-list {
   padding: 10px;
   display: grid;

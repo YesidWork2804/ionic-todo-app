@@ -289,6 +289,10 @@ ion-toolbar {
   color: var(--ion-text-color);
 }
 
+.category-viewport {
+  overflow-y: auto;
+}
+
 .category-list {
   padding: 10px;
   display: grid;

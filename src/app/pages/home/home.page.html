@@ -200,7 +200,13 @@
 
     @if (taskViewModels$ | async; as tasks) {
       @if (tasks.length > 0) {
-        <cdk-virtual-scroll-viewport class="task-viewport" [itemSize]="116" [minBufferPx]="464" [maxBufferPx]="928">
+        <cdk-virtual-scroll-viewport
+          class="task-viewport"
+          [style.height.px]="getTaskViewportHeight(tasks.length)"
+          [itemSize]="116"
+          [minBufferPx]="464"
+          [maxBufferPx]="928"
+        >
           <ion-list lines="none" class="task-list">
             <ion-item-sliding #slidingItem *cdkVirtualFor="let task of tasks; trackBy: trackByTaskId">
               <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
