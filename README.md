@@ -210,13 +210,14 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 
     ![QR Android](./assets/images/qr-android.png)
 
-  - **Aplicación funcionando en emulador iOS (captura 1)**
+  - **Aplicación funcionando en emulador iOS**
 
-    ![App iOS emulador 1](./assets/images/cap_ios_1.jpeg)
-
-  - **Aplicación funcionando en emulador iOS (captura 2)**
-
-    ![App iOS emulador 2](./assets/images/cap_ios_2.jpeg)
+    <table>
+      <tr>
+        <td><img src="./assets/images/cap_ios_1.jpeg" alt="App iOS emulador 1" width="300"/></td>
+        <td><img src="./assets/images/cap_ios_2.jpeg" alt="App iOS emulador 2" width="300"/></td>
+      </tr>
+    </table>
 
 - **README completo**: incluido en este archivo
 
