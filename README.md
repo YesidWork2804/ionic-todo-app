@@ -194,7 +194,7 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 ## 📎 Entregables
 - **Proyecto desplegado**: https://ionic-todo-app.netlify.app/
 - **APK generado**: `platforms/android/app/build/outputs/apk/debug/app-debug.apk`
-- **Enlace de descarga del APK**: https://drive.google.com/file/d/1UPkeegrw2C7u9J0BUzxRvRtw2UzFRbzS/view?usp=sharing
+- **Enlace de descarga del APK**: https://drive.google.com/file/d/1O7MVhFA8uSfJ2W9_r7XhXs9c5E7ClFFk/view?usp=sharing
 - **Video demo app**: https://drive.google.com/file/d/1ZS41PjuWCK6U6cAXO58bMNkZSYl8L4y_/view?usp=sharing
 - **Video demo Firebase Remote Config**: https://drive.google.com/file/d/1QhXQX7W4K-0l36QKlMZSnnDT_9LN1tKd/view?usp=sharing
 - **Capturas**:
