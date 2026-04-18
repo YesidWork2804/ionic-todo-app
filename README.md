@@ -56,11 +56,7 @@ ionic serve
 npm run build
 ```
 
-La salida queda en:
-
-```text
-www
-```
+Los archivos generados quedan en la carpeta `www`.
 
 ## 📱 Compilación y ejecución con Cordova
 
@@ -199,7 +195,6 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 - **Proyecto desplegado**: https://ionic-todo-app.netlify.app/
 - **APK generado**: `platforms/android/app/build/outputs/apk/debug/app-debug.apk`
 - **Enlace de descarga del APK**: https://drive.google.com/file/d/1UPkeegrw2C7u9J0BUzxRvRtw2UzFRbzS/view?usp=sharing
-- **IPA**: agregar ruta o enlace aquí
 - **Video demo app**: https://drive.google.com/file/d/1ZS41PjuWCK6U6cAXO58bMNkZSYl8L4y_/view?usp=sharing
 - **Video demo Firebase Remote Config**: https://drive.google.com/file/d/1QhXQX7W4K-0l36QKlMZSnnDT_9LN1tKd/view?usp=sharing
 - **Capturas**:
@@ -215,9 +210,14 @@ Se trabajó de forma ordenada, buscando que el código fuera claro, entendible y
 
     ![QR Android](./assets/images/qr-android.png)
 
-- **QR iOS**:
+  - **Aplicación funcionando en emulador iOS (captura 1)**
 
-  ![QR iOS](./assets/images/qr-ios.png)
+    ![App iOS emulador 1](./assets/images/cap_ios_1.jpeg)
+
+  - **Aplicación funcionando en emulador iOS (captura 2)**
+
+    ![App iOS emulador 2](./assets/images/cap_ios_2.jpeg)
+
 - **README completo**: incluido en este archivo
 
 ## � Mejoras futuras
