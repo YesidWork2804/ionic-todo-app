@@ -205,11 +205,19 @@ export class HomePage {
     }
   }
 
+  isMobileLayout(): boolean {
+    return window.innerWidth <= 576;
+  }
+
   getTaskViewportHeight(taskCount: number): number {
     const itemHeight = 116;
     const verticalPadding = 20;
     const minimumHeight = 140;
     const maximumHeight = 560;
+
+    if (this.isMobileLayout()) {
+      return Math.max(taskCount * itemHeight + verticalPadding, minimumHeight);
+    }
 
     return Math.min(Math.max(taskCount * itemHeight + verticalPadding, minimumHeight), maximumHeight);
   }

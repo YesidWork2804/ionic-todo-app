@@ -577,6 +577,41 @@ ion-item-option {
     grid-template-columns: 1fr;
   }
 
+  .task-list {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 0;
+  }
+
+  .task-list--mobile {
+    display: grid;
+    gap: 14px;
+  }
+
+  .task-list--mobile ion-item-sliding {
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+  }
+
+  .task-list--mobile .task-item {
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    --min-height: 104px;
+    border-radius: 24px;
+    border-color: var(--card-border);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 8%, transparent);
+  }
+
+  .task-list--mobile .task-topline {
+    gap: 10px;
+  }
+
+  .task-list--mobile .task-status-chip {
+    align-self: flex-start;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
   }

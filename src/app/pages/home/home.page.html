@@ -200,55 +200,101 @@
 
     @if (taskViewModels$ | async; as tasks) {
       @if (tasks.length > 0) {
-        <cdk-virtual-scroll-viewport
-          class="task-viewport"
-          [style.height.px]="getTaskViewportHeight(tasks.length)"
-          [itemSize]="116"
-          [minBufferPx]="464"
-          [maxBufferPx]="928"
-        >
-          <ion-list lines="none" class="task-list">
-            <ion-item-sliding #slidingItem *cdkVirtualFor="let task of tasks; trackBy: trackByTaskId">
-              <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
-                <ion-checkbox
-                  slot="start"
-                  [checked]="task.completed"
-                  (ionChange)="toggleTask(task.id)"
-                ></ion-checkbox>
+        @if (isMobileLayout()) {
+          <ion-list lines="none" class="task-list task-list--mobile">
+            @for (task of tasks; track trackByTaskId($index, task)) {
+              <ion-item-sliding #slidingItem>
+                <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
+                  <ion-checkbox
+                    slot="start"
+                    [checked]="task.completed"
+                    (ionChange)="toggleTask(task.id)"
+                  ></ion-checkbox>
 
-                <ion-label>
-                  <div class="task-topline">
-                    <h2>{{ task.title }}</h2>
-                    <span class="task-status-chip" [ngClass]="task.completed ? 'task-status-chip--completed' : 'task-status-chip--pending'">
-                      {{ task.completed ? 'Completada' : 'Pendiente' }}
-                    </span>
-                  </div>
+                  <ion-label>
+                    <div class="task-topline">
+                      <h2>{{ task.title }}</h2>
+                      <span class="task-status-chip" [ngClass]="task.completed ? 'task-status-chip--completed' : 'task-status-chip--pending'">
+                        {{ task.completed ? 'Completada' : 'Pendiente' }}
+                      </span>
+                    </div>
 
-                  <p>
-                    <ion-icon name="checkmark-done-outline"></ion-icon>
-                    Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
-                  </p>
+                    <p>
+                      <ion-icon name="checkmark-done-outline"></ion-icon>
+                      Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
+                    </p>
 
-                  <div class="task-meta">
-                    <span
-                      class="task-category-chip"
-                      [style.background]="task.categoryColor"
-                      [style.color]="'#ffffff'"
-                    >
-                      {{ task.categoryName }}
-                    </span>
-                  </div>
-                </ion-label>
-              </ion-item>
+                    <div class="task-meta">
+                      <span
+                        class="task-category-chip"
+                        [style.background]="task.categoryColor"
+                        [style.color]="'#ffffff'"
+                      >
+                        {{ task.categoryName }}
+                      </span>
+                    </div>
+                  </ion-label>
+                </ion-item>
 
-              <ion-item-options side="end">
-                <ion-item-option color="danger" (click)="deleteTask(task.id, slidingItem)">
-                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-item-option>
-              </ion-item-options>
-            </ion-item-sliding>
+                <ion-item-options side="end">
+                  <ion-item-option color="danger" (click)="deleteTask(task.id, slidingItem)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            }
           </ion-list>
-        </cdk-virtual-scroll-viewport>
+        } @else {
+          <cdk-virtual-scroll-viewport
+            class="task-viewport"
+            [style.height.px]="getTaskViewportHeight(tasks.length)"
+            [itemSize]="116"
+            [minBufferPx]="464"
+            [maxBufferPx]="928"
+          >
+            <ion-list lines="none" class="task-list">
+              <ion-item-sliding #slidingItem *cdkVirtualFor="let task of tasks; trackBy: trackByTaskId">
+                <ion-item class="task-item" [ngClass]="{ 'task-item--completed': task.completed }">
+                  <ion-checkbox
+                    slot="start"
+                    [checked]="task.completed"
+                    (ionChange)="toggleTask(task.id)"
+                  ></ion-checkbox>
+
+                  <ion-label>
+                    <div class="task-topline">
+                      <h2>{{ task.title }}</h2>
+                      <span class="task-status-chip" [ngClass]="task.completed ? 'task-status-chip--completed' : 'task-status-chip--pending'">
+                        {{ task.completed ? 'Completada' : 'Pendiente' }}
+                      </span>
+                    </div>
+
+                    <p>
+                      <ion-icon name="checkmark-done-outline"></ion-icon>
+                      Creada el {{ task.createdAt | date: 'dd/MM/yyyy' }}
+                    </p>
+
+                    <div class="task-meta">
+                      <span
+                        class="task-category-chip"
+                        [style.background]="task.categoryColor"
+                        [style.color]="'#ffffff'"
+                      >
+                        {{ task.categoryName }}
+                      </span>
+                    </div>
+                  </ion-label>
+                </ion-item>
+
+                <ion-item-options side="end">
+                  <ion-item-option color="danger" (click)="deleteTask(task.id, slidingItem)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </cdk-virtual-scroll-viewport>
+        }
       } @else {
         <section class="empty-state">
           <div class="empty-icon">

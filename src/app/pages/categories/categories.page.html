@@ -142,37 +142,65 @@
 
     @if (categories$ | async; as categories) {
       @if (categories.length > 0) {
-        <cdk-virtual-scroll-viewport
-          class="category-viewport"
-          [style.height.px]="getCategoryViewportHeight(categories.length)"
-          [itemSize]="88"
-          [minBufferPx]="352"
-          [maxBufferPx]="704"
-        >
-          <ion-list lines="none" class="category-list">
-            <ion-item-sliding #slidingItem *cdkVirtualFor="let category of categories; trackBy: trackByCategoryId">
-              <ion-item class="category-item">
-                <div slot="start" class="category-color" [ngStyle]="{ 'background-color': category.color }"></div>
+        @if (isMobileLayout()) {
+          <ion-list lines="none" class="category-list category-list--mobile">
+            @for (category of categories; track trackByCategoryId($index, category)) {
+              <ion-item-sliding #slidingItem>
+                <ion-item class="category-item">
+                  <div slot="start" class="category-color" [ngStyle]="{ 'background-color': category.color }"></div>
 
-                <ion-label>
-                  <h2>{{ category.name }}</h2>
-                  <p>Actualizada el {{ category.updatedAt | date: 'dd/MM/yyyy' }}</p>
-                </ion-label>
+                  <ion-label>
+                    <h2>{{ category.name }}</h2>
+                    <p>Actualizada el {{ category.updatedAt | date: 'dd/MM/yyyy' }}</p>
+                  </ion-label>
 
-                <ion-note slot="end">{{ category.color }}</ion-note>
-              </ion-item>
+                  <ion-note slot="end">{{ category.color }}</ion-note>
+                </ion-item>
 
-              <ion-item-options side="end">
-                <ion-item-option color="warning" (click)="startEdit(category, slidingItem)">
-                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-                </ion-item-option>
-                <ion-item-option color="danger" (click)="deleteCategory(category.id, slidingItem)">
-                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-item-option>
-              </ion-item-options>
-            </ion-item-sliding>
+                <ion-item-options side="end">
+                  <ion-item-option color="warning" (click)="startEdit(category, slidingItem)">
+                    <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option color="danger" (click)="deleteCategory(category.id, slidingItem)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            }
           </ion-list>
-        </cdk-virtual-scroll-viewport>
+        } @else {
+          <cdk-virtual-scroll-viewport
+            class="category-viewport"
+            [style.height.px]="getCategoryViewportHeight(categories.length)"
+            [itemSize]="88"
+            [minBufferPx]="352"
+            [maxBufferPx]="704"
+          >
+            <ion-list lines="none" class="category-list">
+              <ion-item-sliding #slidingItem *cdkVirtualFor="let category of categories; trackBy: trackByCategoryId">
+                <ion-item class="category-item">
+                  <div slot="start" class="category-color" [ngStyle]="{ 'background-color': category.color }"></div>
+
+                  <ion-label>
+                    <h2>{{ category.name }}</h2>
+                    <p>Actualizada el {{ category.updatedAt | date: 'dd/MM/yyyy' }}</p>
+                  </ion-label>
+
+                  <ion-note slot="end">{{ category.color }}</ion-note>
+                </ion-item>
+
+                <ion-item-options side="end">
+                  <ion-item-option color="warning" (click)="startEdit(category, slidingItem)">
+                    <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option color="danger" (click)="deleteCategory(category.id, slidingItem)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </cdk-virtual-scroll-viewport>
+        }
       } @else {
         <section class="empty-state">
           <div class="empty-icon">

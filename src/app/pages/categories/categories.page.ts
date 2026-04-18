@@ -165,11 +165,19 @@ export class CategoriesPage {
     this.themeService.setThemeMode(themeMode);
   }
 
+  isMobileLayout(): boolean {
+    return window.innerWidth <= 576;
+  }
+
   getCategoryViewportHeight(categoryCount: number): number {
     const itemHeight = 88;
     const verticalPadding = 20;
     const minimumHeight = 112;
     const maximumHeight = 520;
+
+    if (this.isMobileLayout()) {
+      return Math.max(categoryCount * itemHeight + verticalPadding, minimumHeight);
+    }
 
     return Math.min(Math.max(categoryCount * itemHeight + verticalPadding, minimumHeight), maximumHeight);
   }
